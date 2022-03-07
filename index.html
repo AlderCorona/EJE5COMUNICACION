@@ -1,0 +1,1579 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/filter.css">
+<link rel="stylesheet" href="css/nouislider.min.css">
+        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title>Eje 5. Comunicación</title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/multi-style-layer.js"></script>
+        <script src="js/leaflet-svg-shape-markers.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
+        <script src="js/tailDT.js"></script>
+<script src="js/nouislider.min.js"></script>
+<script src="js/wNumb.js"></script>
+        <script src="data/LENGUASMAYAS_2.js"></script>
+        <script src="data/DIVISINESTATAL_3.js"></script>
+        <script src="data/MICROOREGIONES_4.js"></script>
+        <script src="data/PAISAJESCULTURALES_5.js"></script>
+        <script src="data/RESERVASMaB_6.js"></script>
+        <script src="data/RUTATRENMAYA_7.js"></script>
+        <script src="data/ESTACIONESYPARADEROS_8.js"></script>
+        <script src="data/ACTIVIDADESEJE5_9.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[15.84654648654852,-93.34746258841378],[21.603951091617144,-84.39272347922147]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_VIALIDADES_0');
+        map.getPane('pane_VIALIDADES_0').style.zIndex = 400;
+        var layer_VIALIDADES_0 = L.tileLayer('http://a.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_VIALIDADES_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 18
+        });
+        layer_VIALIDADES_0;
+        map.addLayer(layer_VIALIDADES_0);
+        map.createPane('pane_SATLITE_1');
+        map.getPane('pane_SATLITE_1').style.zIndex = 401;
+        var layer_SATLITE_1 = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            pane: 'pane_SATLITE_1',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 18
+        });
+        layer_SATLITE_1;
+        function pop_LENGUASMAYAS_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">ID</th>\
+                        <td>' + (feature.properties['ID'] !== null ? autolinker.link(feature.properties['ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LENGUA</th>\
+                        <td>' + (feature.properties['LENGUA'] !== null ? autolinker.link(feature.properties['LENGUA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">VARIANTES</th>\
+                        <td>' + (feature.properties['VARIANTES'] !== null ? autolinker.link(feature.properties['VARIANTES'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ESTADOS</th>\
+                        <td>' + (feature.properties['ESTADOS'] !== null ? autolinker.link(feature.properties['ESTADOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">RIESGO</th>\
+                        <td>' + (feature.properties['RIESGO'] !== null ? autolinker.link(feature.properties['RIESGO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SABER MÁS</th>\
+                        <td>' + (feature.properties['SABER MÁS'] !== null ? autolinker.link(feature.properties['SABER MÁS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FUENTE</th>\
+                        <td>' + (feature.properties['FUENTE'] !== null ? autolinker.link(feature.properties['FUENTE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NO. HABLAN</th>\
+                        <td>' + (feature.properties['NO. HABLAN'] !== null ? autolinker.link(feature.properties['NO. HABLAN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_LENGUASMAYAS_2_0(feature) {
+            switch(String(feature.properties['LENGUA'])) {
+                case 'Bats’ik’op':
+                    return {
+                pane: 'pane_LENGUASMAYAS_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(105,118,234,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Ch’ol':
+                    return {
+                pane: 'pane_LENGUASMAYAS_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(223,69,113,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Chontal De Tabasco':
+                    return {
+                pane: 'pane_LENGUASMAYAS_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(29,224,107,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Ixil':
+                    return {
+                pane: 'pane_LENGUASMAYAS_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(217,126,179,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Jach-T’aan':
+                    return {
+                pane: 'pane_LENGUASMAYAS_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(141,178,234,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Jakalteko-Popti’':
+                    return {
+                pane: 'pane_LENGUASMAYAS_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(191,255,131,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'K’iche’':
+                    return {
+                pane: 'pane_LENGUASMAYAS_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(74,224,224,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Kaqchikel':
+                    return {
+                pane: 'pane_LENGUASMAYAS_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(202,232,93,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Koti’':
+                    return {
+                pane: 'pane_LENGUASMAYAS_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(225,105,49,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Kuti\'':
+                    return {
+                pane: 'pane_LENGUASMAYAS_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(34,231,53,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Maayat’aan':
+                    return {
+                pane: 'pane_LENGUASMAYAS_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(200,187,45,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Q’anjob’al':
+                    return {
+                pane: 'pane_LENGUASMAYAS_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(112,201,239,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Q’eqchí':
+                    return {
+                pane: 'pane_LENGUASMAYAS_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(234,255,149,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Qato’k':
+                    return {
+                pane: 'pane_LENGUASMAYAS_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(216,164,80,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Qyool (awateco)':
+                    return {
+                pane: 'pane_LENGUASMAYAS_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(213,32,195,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Qyool (Mam)':
+                    return {
+                pane: 'pane_LENGUASMAYAS_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(60,235,182,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Teko':
+                    return {
+                pane: 'pane_LENGUASMAYAS_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(237,163,255,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Tojol-Ab’al':
+                    return {
+                pane: 'pane_LENGUASMAYAS_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(210,84,82,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Tseltal':
+                    return {
+                pane: 'pane_LENGUASMAYAS_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(151,98,204,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_LENGUASMAYAS_2');
+        map.getPane('pane_LENGUASMAYAS_2').style.zIndex = 402;
+        map.getPane('pane_LENGUASMAYAS_2').style['mix-blend-mode'] = 'normal';
+        var layer_LENGUASMAYAS_2 = new L.geoJson(json_LENGUASMAYAS_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_LENGUASMAYAS_2',
+            layerName: 'layer_LENGUASMAYAS_2',
+            pane: 'pane_LENGUASMAYAS_2',
+            onEachFeature: pop_LENGUASMAYAS_2,
+            style: style_LENGUASMAYAS_2_0,
+        });
+        bounds_group.addLayer(layer_LENGUASMAYAS_2);
+        function pop_DIVISINESTATAL_3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">NOMGEO</th>\
+                        <td>' + (feature.properties['NOMGEO'] !== null ? autolinker.link(feature.properties['NOMGEO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_DIVISINESTATAL_3_0() {
+            return {
+                pane: 'pane_DIVISINESTATAL_3',
+                opacity: 1,
+                color: 'rgba(193,255,191,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: false,
+            }
+        }
+        map.createPane('pane_DIVISINESTATAL_3');
+        map.getPane('pane_DIVISINESTATAL_3').style.zIndex = 403;
+        map.getPane('pane_DIVISINESTATAL_3').style['mix-blend-mode'] = 'normal';
+        var layer_DIVISINESTATAL_3 = new L.geoJson(json_DIVISINESTATAL_3, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_DIVISINESTATAL_3',
+            layerName: 'layer_DIVISINESTATAL_3',
+            pane: 'pane_DIVISINESTATAL_3',
+            onEachFeature: pop_DIVISINESTATAL_3,
+            style: style_DIVISINESTATAL_3_0,
+        });
+        bounds_group.addLayer(layer_DIVISINESTATAL_3);
+        map.addLayer(layer_DIVISINESTATAL_3);
+        function pop_MICROOREGIONES_4(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">ID</th>\
+                        <td>' + (feature.properties['ID'] !== null ? autolinker.link(feature.properties['ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">MICRORREGI</th>\
+                        <td>' + (feature.properties['MICRORREGI'] !== null ? autolinker.link(feature.properties['MICRORREGI'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ESTADO</th>\
+                        <td>' + (feature.properties['ESTADO'] !== null ? autolinker.link(feature.properties['ESTADO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">P. CULTURA</th>\
+                        <td>' + (feature.properties['P. CULTURA'] !== null ? autolinker.link(feature.properties['P. CULTURA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">MUNICIPIOS</th>\
+                        <td>' + (feature.properties['MUNICIPIOS'] !== null ? autolinker.link(feature.properties['MUNICIPIOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TRAMOS</th>\
+                        <td>' + (feature.properties['TRAMOS'] !== null ? autolinker.link(feature.properties['TRAMOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ACTUALIZAC</th>\
+                        <td>' + (feature.properties['ACTUALIZAC'] !== null ? autolinker.link(feature.properties['ACTUALIZAC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_MICROOREGIONES_4_0() {
+            return {
+                pane: 'pane_MICROOREGIONES_4',
+                opacity: 1,
+                color: 'rgba(196,196,196,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_MICROOREGIONES_4');
+        map.getPane('pane_MICROOREGIONES_4').style.zIndex = 404;
+        map.getPane('pane_MICROOREGIONES_4').style['mix-blend-mode'] = 'normal';
+        var layer_MICROOREGIONES_4 = new L.geoJson(json_MICROOREGIONES_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_MICROOREGIONES_4',
+            layerName: 'layer_MICROOREGIONES_4',
+            pane: 'pane_MICROOREGIONES_4',
+            onEachFeature: pop_MICROOREGIONES_4,
+            style: style_MICROOREGIONES_4_0,
+        });
+        bounds_group.addLayer(layer_MICROOREGIONES_4);
+        function pop_PAISAJESCULTURALES_5(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">ID</th>\
+                        <td>' + (feature.properties['ID'] !== null ? autolinker.link(feature.properties['ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">P. CULTURA</th>\
+                        <td>' + (feature.properties['P. CULTURA'] !== null ? autolinker.link(feature.properties['P. CULTURA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ESTADO</th>\
+                        <td>' + (feature.properties['ESTADO'] !== null ? autolinker.link(feature.properties['ESTADO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">MICRORREGI</th>\
+                        <td>' + (feature.properties['MICRORREGI'] !== null ? autolinker.link(feature.properties['MICRORREGI'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TRAMO</th>\
+                        <td>' + (feature.properties['TRAMO'] !== null ? autolinker.link(feature.properties['TRAMO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ACT. ECONO</th>\
+                        <td>' + (feature.properties['ACT. ECONO'] !== null ? autolinker.link(feature.properties['ACT. ECONO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ACTUALIZAC</th>\
+                        <td>' + (feature.properties['ACTUALIZAC'] !== null ? autolinker.link(feature.properties['ACTUALIZAC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_PAISAJESCULTURALES_5_0() {
+            return {
+                pane: 'pane_PAISAJESCULTURALES_5',
+                opacity: 1,
+                color: 'rgba(57,199,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'round',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PAISAJESCULTURALES_5');
+        map.getPane('pane_PAISAJESCULTURALES_5').style.zIndex = 405;
+        map.getPane('pane_PAISAJESCULTURALES_5').style['mix-blend-mode'] = 'normal';
+        var layer_PAISAJESCULTURALES_5 = new L.geoJson(json_PAISAJESCULTURALES_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PAISAJESCULTURALES_5',
+            layerName: 'layer_PAISAJESCULTURALES_5',
+            pane: 'pane_PAISAJESCULTURALES_5',
+            onEachFeature: pop_PAISAJESCULTURALES_5,
+            style: style_PAISAJESCULTURALES_5_0,
+        });
+        bounds_group.addLayer(layer_PAISAJESCULTURALES_5);
+        function pop_RESERVASMaB_6(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">ID</th>\
+                        <td>' + (feature.properties['ID'] !== null ? autolinker.link(feature.properties['ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CATEGORÍA</th>\
+                        <td>' + (feature.properties['CATEGORÍA'] !== null ? autolinker.link(feature.properties['CATEGORÍA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SITIO</th>\
+                        <td>' + (feature.properties['SITIO'] !== null ? autolinker.link(feature.properties['SITIO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">IMAGEN</th>\
+                        <td>' + (feature.properties['IMAGEN'] !== null ? autolinker.link(feature.properties['IMAGEN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CLASIFICAC</th>\
+                        <td>' + (feature.properties['CLASIFICAC'] !== null ? autolinker.link(feature.properties['CLASIFICAC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ESTADOS</th>\
+                        <td>' + (feature.properties['ESTADOS'] !== null ? autolinker.link(feature.properties['ESTADOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">MUNICIPIOS</th>\
+                        <td>' + (feature.properties['MUNICIPIOS'] !== null ? autolinker.link(feature.properties['MUNICIPIOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TERRITORIO</th>\
+                        <td>' + (feature.properties['TERRITORIO'] !== null ? autolinker.link(feature.properties['TERRITORIO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PRÁCTICAS</th>\
+                        <td>' + (feature.properties['PRÁCTICAS'] !== null ? autolinker.link(feature.properties['PRÁCTICAS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ÁREA (HA)</th>\
+                        <td>' + (feature.properties['ÁREA (HA)'] !== null ? autolinker.link(feature.properties['ÁREA (HA)'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ÁREA TR (</th>\
+                        <td>' + (feature.properties['ÁREA TR ('] !== null ? autolinker.link(feature.properties['ÁREA TR ('].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ÁREA TR_1</th>\
+                        <td>' + (feature.properties['ÁREA TR_1'] !== null ? autolinker.link(feature.properties['ÁREA TR_1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FECHA DEC</th>\
+                        <td>' + (feature.properties['FECHA DEC'] !== null ? autolinker.link(feature.properties['FECHA DEC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TRAMO</th>\
+                        <td>' + (feature.properties['TRAMO'] !== null ? autolinker.link(feature.properties['TRAMO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">P. CULTURA</th>\
+                        <td>' + (feature.properties['P. CULTURA'] !== null ? autolinker.link(feature.properties['P. CULTURA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">MICRORREGI</th>\
+                        <td>' + (feature.properties['MICRORREGI'] !== null ? autolinker.link(feature.properties['MICRORREGI'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">P. MUNDIAL</th>\
+                        <td>' + (feature.properties['P. MUNDIAL'] !== null ? autolinker.link(feature.properties['P. MUNDIAL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">MaB</th>\
+                        <td>' + (feature.properties['MaB'] !== null ? autolinker.link(feature.properties['MaB'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">RAMSAR</th>\
+                        <td>' + (feature.properties['RAMSAR'] !== null ? autolinker.link(feature.properties['RAMSAR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ANP</th>\
+                        <td>' + (feature.properties['ANP'] !== null ? autolinker.link(feature.properties['ANP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ARCHIVOS</th>\
+                        <td>' + (feature.properties['ARCHIVOS'] !== null ? autolinker.link(feature.properties['ARCHIVOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">+ INFO</th>\
+                        <td>' + (feature.properties['+ INFO'] !== null ? autolinker.link(feature.properties['+ INFO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ACTUALIZAC</th>\
+                        <td>' + (feature.properties['ACTUALIZAC'] !== null ? autolinker.link(feature.properties['ACTUALIZAC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">R.Biosfera</th>\
+                        <td>' + (feature.properties['R.Biosfera'] !== null ? autolinker.link(feature.properties['R.Biosfera'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_RESERVASMaB_6_0() {
+            return {
+                pane: 'pane_RESERVASMaB_6',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_RESERVASMaB_6');
+        map.getPane('pane_RESERVASMaB_6').style.zIndex = 406;
+        map.getPane('pane_RESERVASMaB_6').style['mix-blend-mode'] = 'normal';
+        var layer_RESERVASMaB_6 = new L.geoJson(json_RESERVASMaB_6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_RESERVASMaB_6',
+            layerName: 'layer_RESERVASMaB_6',
+            pane: 'pane_RESERVASMaB_6',
+            onEachFeature: pop_RESERVASMaB_6,
+            style: style_RESERVASMaB_6_0,
+        });
+        bounds_group.addLayer(layer_RESERVASMaB_6);
+        map.addLayer(layer_RESERVASMaB_6);
+        function pop_RUTATRENMAYA_7(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Nombre</th>\
+                        <td>' + (feature.properties['Nombre'] !== null ? autolinker.link(feature.properties['Nombre'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Tipo</th>\
+                        <td>' + (feature.properties['Tipo'] !== null ? autolinker.link(feature.properties['Tipo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Direccione</th>\
+                        <td>' + (feature.properties['Direccione'] !== null ? autolinker.link(feature.properties['Direccione'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Longitud</th>\
+                        <td>' + (feature.properties['Longitud'] !== null ? autolinker.link(feature.properties['Longitud'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Estados</th>\
+                        <td>' + (feature.properties['Estados'] !== null ? autolinker.link(feature.properties['Estados'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Estaciones</th>\
+                        <td>' + (feature.properties['Estaciones'] !== null ? autolinker.link(feature.properties['Estaciones'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Paraderos</th>\
+                        <td>' + (feature.properties['Paraderos'] !== null ? autolinker.link(feature.properties['Paraderos'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Territorio</th>\
+                        <td>' + (feature.properties['Territorio'] !== null ? autolinker.link(feature.properties['Territorio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Asentamien</th>\
+                        <td>' + (feature.properties['Asentamien'] !== null ? autolinker.link(feature.properties['Asentamien'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Demanda</th>\
+                        <td>' + (feature.properties['Demanda'] !== null ? autolinker.link(feature.properties['Demanda'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_RUTATRENMAYA_7_0(feature) {
+            switch(String(feature.properties['Nombre'])) {
+                case 'Tramo 1 Selva uno':
+                    return {
+                pane: 'pane_RUTATRENMAYA_7',
+                opacity: 1,
+                color: 'rgba(91,172,203,1.0)',
+                dashArray: '',
+                lineCap: 'round',
+                lineJoin: 'round',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Tramo 2 Golfo uno':
+                    return {
+                pane: 'pane_RUTATRENMAYA_7',
+                opacity: 1,
+                color: 'rgba(182,54,221,1.0)',
+                dashArray: '',
+                lineCap: 'round',
+                lineJoin: 'round',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Tramo 3 Golfo dos':
+                    return {
+                pane: 'pane_RUTATRENMAYA_7',
+                opacity: 1,
+                color: 'rgba(30,231,138,1.0)',
+                dashArray: '',
+                lineCap: 'round',
+                lineJoin: 'round',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Tramo 4 Golfo tres':
+                    return {
+                pane: 'pane_RUTATRENMAYA_7',
+                opacity: 1,
+                color: 'rgba(200,137,0,1.0)',
+                dashArray: '',
+                lineCap: 'round',
+                lineJoin: 'round',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Tramo 5 Caribe dos':
+                    return {
+                pane: 'pane_RUTATRENMAYA_7',
+                opacity: 1,
+                color: 'rgba(252,56,154,1.0)',
+                dashArray: '',
+                lineCap: 'round',
+                lineJoin: 'round',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Tramo 6 Caribe uno':
+                    return {
+                pane: 'pane_RUTATRENMAYA_7',
+                opacity: 1,
+                color: 'rgba(255,111,135,1.0)',
+                dashArray: '',
+                lineCap: 'round',
+                lineJoin: 'round',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Tramo 7 Selva dos':
+                    return {
+                pane: 'pane_RUTATRENMAYA_7',
+                opacity: 1,
+                color: 'rgba(62,56,238,1.0)',
+                dashArray: '',
+                lineCap: 'round',
+                lineJoin: 'round',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        function style_RUTATRENMAYA_7_1(feature) {
+            switch(String(feature.properties['Nombre'])) {
+                case 'Tramo 1 Selva uno':
+                    return {
+                pane: 'pane_RUTATRENMAYA_7',
+                opacity: 1,
+                color: 'rgba(91,172,203,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Tramo 2 Golfo uno':
+                    return {
+                pane: 'pane_RUTATRENMAYA_7',
+                opacity: 1,
+                color: 'rgba(182,54,221,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Tramo 3 Golfo dos':
+                    return {
+                pane: 'pane_RUTATRENMAYA_7',
+                opacity: 1,
+                color: 'rgba(30,231,138,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Tramo 4 Golfo tres':
+                    return {
+                pane: 'pane_RUTATRENMAYA_7',
+                opacity: 1,
+                color: 'rgba(200,137,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Tramo 5 Caribe dos':
+                    return {
+                pane: 'pane_RUTATRENMAYA_7',
+                opacity: 1,
+                color: 'rgba(252,56,154,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Tramo 6 Caribe uno':
+                    return {
+                pane: 'pane_RUTATRENMAYA_7',
+                opacity: 1,
+                color: 'rgba(255,111,135,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Tramo 7 Selva dos':
+                    return {
+                pane: 'pane_RUTATRENMAYA_7',
+                opacity: 1,
+                color: 'rgba(62,56,238,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_RUTATRENMAYA_7');
+        map.getPane('pane_RUTATRENMAYA_7').style.zIndex = 407;
+        map.getPane('pane_RUTATRENMAYA_7').style['mix-blend-mode'] = 'normal';
+        var layer_RUTATRENMAYA_7 = new L.geoJson.multiStyle(json_RUTATRENMAYA_7, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_RUTATRENMAYA_7',
+            layerName: 'layer_RUTATRENMAYA_7',
+            pane: 'pane_RUTATRENMAYA_7',
+            onEachFeature: pop_RUTATRENMAYA_7,
+            styles: [style_RUTATRENMAYA_7_0,style_RUTATRENMAYA_7_1,]
+        });
+        bounds_group.addLayer(layer_RUTATRENMAYA_7);
+        map.addLayer(layer_RUTATRENMAYA_7);
+        function pop_ESTACIONESYPARADEROS_8(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Nombre</th>\
+                        <td>' + (feature.properties['Nombre'] !== null ? autolinker.link(feature.properties['Nombre'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Tipo</th>\
+                        <td>' + (feature.properties['Tipo'] !== null ? autolinker.link(feature.properties['Tipo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Estado</th>\
+                        <td>' + (feature.properties['Estado'] !== null ? autolinker.link(feature.properties['Estado'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Paisaje Cu</th>\
+                        <td>' + (feature.properties['Paisaje Cu'] !== null ? autolinker.link(feature.properties['Paisaje Cu'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Tramo</th>\
+                        <td>' + (feature.properties['Tramo'] !== null ? autolinker.link(feature.properties['Tramo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_ESTACIONESYPARADEROS_8_0(feature) {
+            switch(String(feature.properties['Tipo'])) {
+                case 'Estación':
+                    return {
+                pane: 'pane_ESTACIONESYPARADEROS_8',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Paradero':
+                    return {
+                pane: 'pane_ESTACIONESYPARADEROS_8',
+                radius: 2.8,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(184,184,184,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_ESTACIONESYPARADEROS_8');
+        map.getPane('pane_ESTACIONESYPARADEROS_8').style.zIndex = 408;
+        map.getPane('pane_ESTACIONESYPARADEROS_8').style['mix-blend-mode'] = 'normal';
+        var layer_ESTACIONESYPARADEROS_8 = new L.geoJson(json_ESTACIONESYPARADEROS_8, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_ESTACIONESYPARADEROS_8',
+            layerName: 'layer_ESTACIONESYPARADEROS_8',
+            pane: 'pane_ESTACIONESYPARADEROS_8',
+            onEachFeature: pop_ESTACIONESYPARADEROS_8,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_ESTACIONESYPARADEROS_8_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_ESTACIONESYPARADEROS_8);
+        map.addLayer(layer_ESTACIONESYPARADEROS_8);
+        function pop_ACTIVIDADESEJE5_9(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">ID</th>\
+                        <td>' + (feature.properties['ID'] !== null ? autolinker.link(feature.properties['ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ACTIVIDAD</th>\
+                        <td>' + (feature.properties['ACTIVIDAD'] !== null ? autolinker.link(feature.properties['ACTIVIDAD'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CLASIFICAC</th>\
+                        <td>' + (feature.properties['CLASIFICAC'] !== null ? autolinker.link(feature.properties['CLASIFICAC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">MES</th>\
+                        <td>' + (feature.properties['MES'] !== null ? autolinker.link(feature.properties['MES'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">COMPONENTE</th>\
+                        <td>' + (feature.properties['COMPONENTE'] !== null ? autolinker.link(feature.properties['COMPONENTE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DURACION</th>\
+                        <td>' + (feature.properties['DURACION'] !== null ? autolinker.link(feature.properties['DURACION'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DESCRIPCIO</th>\
+                        <td>' + (feature.properties['DESCRIPCIO'] !== null ? autolinker.link(feature.properties['DESCRIPCIO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">OBJETIVOS</th>\
+                        <td>' + (feature.properties['OBJETIVOS'] !== null ? autolinker.link(feature.properties['OBJETIVOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ESTADO</th>\
+                        <td>' + (feature.properties['ESTADO'] !== null ? autolinker.link(feature.properties['ESTADO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">MUNICIPIO</th>\
+                        <td>' + (feature.properties['MUNICIPIO'] !== null ? autolinker.link(feature.properties['MUNICIPIO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SITIO</th>\
+                        <td>' + (feature.properties['SITIO'] !== null ? autolinker.link(feature.properties['SITIO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SRC</th>\
+                        <td>' + (feature.properties['SRC'] !== null ? autolinker.link(feature.properties['SRC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">COORD X</th>\
+                        <td>' + (feature.properties['COORD X'] !== null ? autolinker.link(feature.properties['COORD X'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">COORD Y</th>\
+                        <td>' + (feature.properties['COORD Y'] !== null ? autolinker.link(feature.properties['COORD Y'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PARTICIPAN</th>\
+                        <td>' + (feature.properties['PARTICIPAN'] !== null ? autolinker.link(feature.properties['PARTICIPAN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TRAMO ASOC</th>\
+                        <td>' + (feature.properties['TRAMO ASOC'] !== null ? autolinker.link(feature.properties['TRAMO ASOC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ESTACIONES</th>\
+                        <td>' + (feature.properties['ESTACIONES'] !== null ? autolinker.link(feature.properties['ESTACIONES'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PARADEROS</th>\
+                        <td>' + (feature.properties['PARADEROS'] !== null ? autolinker.link(feature.properties['PARADEROS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ENTREGABLE</th>\
+                        <td>' + (feature.properties['ENTREGABLE'] !== null ? autolinker.link(feature.properties['ENTREGABLE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">MAPA INTER</th>\
+                        <td>' + (feature.properties['MAPA INTER'] !== null ? autolinker.link(feature.properties['MAPA INTER'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FECHA INIC</th>\
+                        <td>' + (feature.properties['FECHA INIC'] !== null ? autolinker.link(feature.properties['FECHA INIC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FECHA TÉR</th>\
+                        <td>' + (feature.properties['FECHA TÉR'] !== null ? autolinker.link(feature.properties['FECHA TÉR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">% AVANCE</th>\
+                        <td>' + (feature.properties['% AVANCE'] !== null ? autolinker.link(feature.properties['% AVANCE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">% RANGO</th>\
+                        <td>' + (feature.properties['% RANGO'] !== null ? autolinker.link(feature.properties['% RANGO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">% PARTICIP</th>\
+                        <td>' + (feature.properties['% PARTICIP'] !== null ? autolinker.link(feature.properties['% PARTICIP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">AÑO</th>\
+                        <td>' + (feature.properties['AÑO'] !== null ? autolinker.link(feature.properties['AÑO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">EJE</th>\
+                        <td>' + (feature.properties['EJE'] !== null ? autolinker.link(feature.properties['EJE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DÍA</th>\
+                        <td>' + (feature.properties['DÍA'] !== null ? autolinker.link(feature.properties['DÍA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_ACTIVIDADESEJE5_9_0(feature) {
+            switch(String(feature.properties['CLASIFICAC'])) {
+                case 'Misión':
+                    return {
+                pane: 'pane_ACTIVIDADESEJE5_9',
+                shape: 'diamond',
+                radius: 7.2,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(61,192,206,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_ACTIVIDADESEJE5_9');
+        map.getPane('pane_ACTIVIDADESEJE5_9').style.zIndex = 409;
+        map.getPane('pane_ACTIVIDADESEJE5_9').style['mix-blend-mode'] = 'normal';
+        var layer_ACTIVIDADESEJE5_9 = new L.geoJson(json_ACTIVIDADESEJE5_9, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_ACTIVIDADESEJE5_9',
+            layerName: 'layer_ACTIVIDADESEJE5_9',
+            pane: 'pane_ACTIVIDADESEJE5_9',
+            onEachFeature: pop_ACTIVIDADESEJE5_9,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_ACTIVIDADESEJE5_9_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_ACTIVIDADESEJE5_9);
+        map.addLayer(layer_ACTIVIDADESEJE5_9);
+            var title = new L.Control();
+            title.onAdd = function (map) {
+                this._div = L.DomUtil.create('div', 'info');
+                this.update();
+                return this._div;
+            };
+            title.update = function () {
+                this._div.innerHTML = '<h2>Eje 5. Comunicación</h2>';
+            };
+            title.addTo(map);
+            var abstract = new L.Control({'position':'topright'});
+            abstract.onAdd = function (map) {
+                this._div = L.DomUtil.create('div',
+                'leaflet-control abstract');
+                this._div.id = 'abstract'
+
+                    abstract.show();
+                    return this._div;
+                };
+                abstract.show = function () {
+                    this._div.classList.remove("abstract");
+                    this._div.classList.add("abstractUncollapsed");
+                    this._div.innerHTML = 'Mapa interactivo elaborado a partir de las actividades llevadas a cabo en el marco de la coordinación del Eje 5. Comunicación. Información sobre lenguas indigenas recuperada del geoportal de INALI (2022).';
+            };
+            abstract.addTo(map);
+        var osmGeocoder = new L.Control.Geocoder({
+            collapsed: true,
+            position: 'topleft',
+            text: 'Search',
+            title: 'Testing'
+        }).addTo(map);
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .className += ' fa fa-search';
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .title += 'Search for a place';
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'ACTIVIDADES-EJE 5<br /><table><tr><td style="text-align: center;"><img src="legend/ACTIVIDADESEJE5_9_Visita0.png" /></td><td>Visita</td></tr></table>': layer_ACTIVIDADESEJE5_9,'ESTACIONES Y PARADEROS<br /><table><tr><td style="text-align: center;"><img src="legend/ESTACIONESYPARADEROS_8_Estación0.png" /></td><td>Estación</td></tr><tr><td style="text-align: center;"><img src="legend/ESTACIONESYPARADEROS_8_Paradero1.png" /></td><td>Paradero</td></tr></table>': layer_ESTACIONESYPARADEROS_8,'RUTA TREN MAYA<br /><table><tr><td style="text-align: center;"><img src="legend/RUTATRENMAYA_7_Tramo1Selvauno0.png" /></td><td>Tramo 1 Selva uno</td></tr><tr><td style="text-align: center;"><img src="legend/RUTATRENMAYA_7_Tramo2Golfouno1.png" /></td><td>Tramo 2 Golfo uno</td></tr><tr><td style="text-align: center;"><img src="legend/RUTATRENMAYA_7_Tramo3Golfodos2.png" /></td><td>Tramo 3 Golfo dos</td></tr><tr><td style="text-align: center;"><img src="legend/RUTATRENMAYA_7_Tramo4Golfotres3.png" /></td><td>Tramo 4 Golfo tres</td></tr><tr><td style="text-align: center;"><img src="legend/RUTATRENMAYA_7_Tramo5Caribedos4.png" /></td><td>Tramo 5 Caribe dos</td></tr><tr><td style="text-align: center;"><img src="legend/RUTATRENMAYA_7_Tramo6Caribeuno5.png" /></td><td>Tramo 6 Caribe uno</td></tr><tr><td style="text-align: center;"><img src="legend/RUTATRENMAYA_7_Tramo7Selvados6.png" /></td><td>Tramo 7 Selva dos</td></tr></table>': layer_RUTATRENMAYA_7,'<img src="legend/RESERVASMaB_6.png" /> RESERVAS MaB': layer_RESERVASMaB_6,'<img src="legend/PAISAJESCULTURALES_5.png" /> PAISAJES CULTURALES': layer_PAISAJESCULTURALES_5,'<img src="legend/MICROOREGIONES_4.png" /> MICROOREGIONES': layer_MICROOREGIONES_4,'<img src="legend/DIVISINESTATAL_3.png" /> DIVISIÓN ESTATAL': layer_DIVISINESTATAL_3,'LENGUAS MAYAS<br /><table><tr><td style="text-align: center;"><img src="legend/LENGUASMAYAS_2_Batsikop0.png" /></td><td>Bats’ik’op</td></tr><tr><td style="text-align: center;"><img src="legend/LENGUASMAYAS_2_Chol1.png" /></td><td>Ch’ol</td></tr><tr><td style="text-align: center;"><img src="legend/LENGUASMAYAS_2_ChontalDeTabasco2.png" /></td><td>Chontal De Tabasco</td></tr><tr><td style="text-align: center;"><img src="legend/LENGUASMAYAS_2_Ixil3.png" /></td><td>Ixil</td></tr><tr><td style="text-align: center;"><img src="legend/LENGUASMAYAS_2_JachTaan4.png" /></td><td>Jach-T’aan</td></tr><tr><td style="text-align: center;"><img src="legend/LENGUASMAYAS_2_JakaltekoPopti5.png" /></td><td>Jakalteko-Popti’</td></tr><tr><td style="text-align: center;"><img src="legend/LENGUASMAYAS_2_Kiche6.png" /></td><td>K’iche’</td></tr><tr><td style="text-align: center;"><img src="legend/LENGUASMAYAS_2_Kaqchikel7.png" /></td><td>Kaqchikel</td></tr><tr><td style="text-align: center;"><img src="legend/LENGUASMAYAS_2_Koti8.png" /></td><td>Koti’</td></tr><tr><td style="text-align: center;"><img src="legend/LENGUASMAYAS_2_Kuti9.png" /></td><td>Kuti\'</td></tr><tr><td style="text-align: center;"><img src="legend/LENGUASMAYAS_2_Maayataan10.png" /></td><td>Maayat’aan</td></tr><tr><td style="text-align: center;"><img src="legend/LENGUASMAYAS_2_Qanjobal11.png" /></td><td>Q’anjob’al</td></tr><tr><td style="text-align: center;"><img src="legend/LENGUASMAYAS_2_Qeqchí12.png" /></td><td>Q’eqchí</td></tr><tr><td style="text-align: center;"><img src="legend/LENGUASMAYAS_2_Qatok13.png" /></td><td>Qato’k</td></tr><tr><td style="text-align: center;"><img src="legend/LENGUASMAYAS_2_Qyoolawateco14.png" /></td><td>Qyool (awateco)</td></tr><tr><td style="text-align: center;"><img src="legend/LENGUASMAYAS_2_QyoolMam15.png" /></td><td>Qyool (Mam)</td></tr><tr><td style="text-align: center;"><img src="legend/LENGUASMAYAS_2_Teko16.png" /></td><td>Teko</td></tr><tr><td style="text-align: center;"><img src="legend/LENGUASMAYAS_2_TojolAbal17.png" /></td><td>Tojol-Ab’al</td></tr><tr><td style="text-align: center;"><img src="legend/LENGUASMAYAS_2_Tseltal18.png" /></td><td>Tseltal</td></tr></table>': layer_LENGUASMAYAS_2,"SATÉLITE": layer_SATLITE_1,"VIALIDADES": layer_VIALIDADES_0,}).addTo(map);
+        setBounds();
+        var i = 0;
+        layer_PAISAJESCULTURALES_5.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['P. CULTURA'] !== null?String('<div style="color: #39c7ff; font-size: 12pt; font-family: \'Arial\', sans-serif;">' + layer.feature.properties['P. CULTURA']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_PAISAJESCULTURALES_5'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var mapDiv = document.getElementById('map');
+        var row = document.createElement('div');
+        row.className="row";
+        row.id="all";
+        row.style.height = "100%";
+        var col1 = document.createElement('div');
+        col1.className="col9";
+        col1.id = "mapWindow";
+        col1.style.height = "99%";
+        col1.style.width = "80%";
+        col1.style.display = "inline-block";
+        var col2 = document.createElement('div');
+        col2.className="col3";
+        col2.id = "menu";
+        col2.style.display = "inline-block";
+        mapDiv.parentNode.insertBefore(row, mapDiv);
+        document.getElementById("all").appendChild(col1);
+        document.getElementById("all").appendChild(col2);
+        col1.appendChild(mapDiv)
+        var Filters = {"DÍA": "str","LENGUA": "str","RIESGO": "str"};
+        function filterFunc() {
+          map.eachLayer(function(lyr){
+          if ("options" in lyr && "dataVar" in lyr["options"]){
+            features = this[lyr["options"]["dataVar"]].features.slice(0);
+            try{
+              for (key in Filters){
+                keyS = key.replace(/[^a-zA-Z0-9_]/g, "")
+                if (Filters[key] == "str" || Filters[key] == "bool"){
+                  var selection = [];
+                  var options = document.getElementById("sel_" + keyS).options
+                  for (var i=0; i < options.length; i++) {
+                    if (options[i].selected) selection.push(options[i].value);
+                  }
+                    try{
+                      if (key in features[0].properties){
+                        for (i = features.length - 1;
+                          i >= 0; --i){
+                          if (selection.indexOf(
+                          features[i].properties[key])<0
+                          && selection.length>0) {
+                          features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                  }
+                }
+                if (Filters[key] == "int"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (parseInt(features[i].properties[key])
+                          < sliderVals[0]
+                          || parseInt(features[i].properties[key])
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "real"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (features[i].properties[key]
+                          < sliderVals[0]
+                          || features[i].properties[key]
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "date"
+                  || Filters[key] == "datetime"
+                  || Filters[key] == "time"){
+                  try{
+                    if (key in features[0].properties){
+                      HTMLkey = key.replace(/[&\/\\#,+()$~%.'":*?<>{} ]/g, '');
+                      startdate = document.getElementById("dat_" +
+                        HTMLkey + "_date1").value.replace(" ", "T");
+                      enddate = document.getElementById("dat_" +
+                        HTMLkey + "_date2").value.replace(" ", "T");
+                      for (i = features.length - 1; i >= 0; --i){
+                        if (features[i].properties[key] < startdate
+                          || features[i].properties[key] > enddate){
+                          features.splice(i,1);
+                        }
+                      }
+                    }
+                  } catch(err){
+                  }
+                }
+              }
+            } catch(err){
+            }
+          this[lyr["options"]["layerName"]].clearLayers();
+          this[lyr["options"]["layerName"]].addData(features);
+        var i = 0;
+        layer_PAISAJESCULTURALES_5.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['P. CULTURA'] !== null?String('<div style="color: #39c7ff; font-size: 12pt; font-family: \'Arial\', sans-serif;">' + layer.feature.properties['P. CULTURA']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_PAISAJESCULTURALES_5'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+          }
+          })
+        }
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_DA = document.createElement('div');
+            div_DA.id = "div_DA";
+            div_DA.className= "filterselect";
+            document.getElementById("menu").appendChild(div_DA);
+            sel_DA = document.createElement('select');
+            sel_DA.multiple = true;
+            sel_DA.size = 10;
+            sel_DA.id = "sel_DA";
+            var DA_options_str = "<option value='' unselected></option>";
+            sel_DA.onchange = function(){filterFunc()};
+            DA_options_str  += '<option value="Día 01">Día 01</option>';
+            DA_options_str  += '<option value="Día 02">Día 02</option>';
+            DA_options_str  += '<option value="Día 03">Día 03</option>';
+            DA_options_str  += '<option value="Día 04">Día 04</option>';
+            DA_options_str  += '<option value="Día 05">Día 05</option>';
+            DA_options_str  += '<option value="Día 06">Día 06</option>';
+            DA_options_str  += '<option value="Día 07">Día 07</option>';
+            DA_options_str  += '<option value="Día 08">Día 08</option>';
+            DA_options_str  += '<option value="Día 09">Día 09</option>';
+            DA_options_str  += '<option value="Día 10">Día 10</option>';
+            DA_options_str  += '<option value="Día 11">Día 11</option>';
+            sel_DA.innerHTML = DA_options_str;
+            div_DA.appendChild(sel_DA);
+            var lab_DA = document.createElement('div');
+            lab_DA.innerHTML = 'DÍA';
+            lab_DA.className = 'filterlabel';
+            div_DA.appendChild(lab_DA);
+            var reset_DA = document.createElement('div');
+            reset_DA.innerHTML = 'clear filter';
+            reset_DA.className = 'filterlabel';
+            reset_DA.onclick = function() {
+                var options = document.getElementById("sel_DA").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_DA.appendChild(reset_DA);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_LENGUA = document.createElement('div');
+            div_LENGUA.id = "div_LENGUA";
+            div_LENGUA.className= "filterselect";
+            document.getElementById("menu").appendChild(div_LENGUA);
+            sel_LENGUA = document.createElement('select');
+            sel_LENGUA.multiple = true;
+            sel_LENGUA.size = 10;
+            sel_LENGUA.id = "sel_LENGUA";
+            var LENGUA_options_str = "<option value='' unselected></option>";
+            sel_LENGUA.onchange = function(){filterFunc()};
+            LENGUA_options_str  += '<option value="Bats’ik’op">Bats’ik’op</option>';
+            LENGUA_options_str  += '<option value="Chontal De Tabasco">Chontal De Tabasco</option>';
+            LENGUA_options_str  += '<option value="Ch’ol">Ch’ol</option>';
+            LENGUA_options_str  += '<option value="Ixil">Ixil</option>';
+            LENGUA_options_str  += '<option value="Jach-T’aan">Jach-T’aan</option>';
+            LENGUA_options_str  += '<option value="Jakalteko-Popti’">Jakalteko-Popti’</option>';
+            LENGUA_options_str  += '<option value="Kaqchikel">Kaqchikel</option>';
+            LENGUA_options_str  += '<option value="Koti’">Koti’</option>';
+            LENGUA_options_str  += '<option value="Kuti&apos;">Kuti&apos;</option>';
+            LENGUA_options_str  += '<option value="K’iche’">K’iche’</option>';
+            LENGUA_options_str  += '<option value="Maayat’aan">Maayat’aan</option>';
+            LENGUA_options_str  += '<option value="Qato’k">Qato’k</option>';
+            LENGUA_options_str  += '<option value="Qyool (Mam)">Qyool (Mam)</option>';
+            LENGUA_options_str  += '<option value="Qyool (awateco)">Qyool (awateco)</option>';
+            LENGUA_options_str  += '<option value="Q’anjob’al">Q’anjob’al</option>';
+            LENGUA_options_str  += '<option value="Q’eqchí">Q’eqchí</option>';
+            LENGUA_options_str  += '<option value="Teko">Teko</option>';
+            LENGUA_options_str  += '<option value="Tojol-Ab’al">Tojol-Ab’al</option>';
+            LENGUA_options_str  += '<option value="Tseltal">Tseltal</option>';
+            sel_LENGUA.innerHTML = LENGUA_options_str;
+            div_LENGUA.appendChild(sel_LENGUA);
+            var lab_LENGUA = document.createElement('div');
+            lab_LENGUA.innerHTML = 'LENGUA';
+            lab_LENGUA.className = 'filterlabel';
+            div_LENGUA.appendChild(lab_LENGUA);
+            var reset_LENGUA = document.createElement('div');
+            reset_LENGUA.innerHTML = 'clear filter';
+            reset_LENGUA.className = 'filterlabel';
+            reset_LENGUA.onclick = function() {
+                var options = document.getElementById("sel_LENGUA").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_LENGUA.appendChild(reset_LENGUA);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_RIESGO = document.createElement('div');
+            div_RIESGO.id = "div_RIESGO";
+            div_RIESGO.className= "filterselect";
+            document.getElementById("menu").appendChild(div_RIESGO);
+            sel_RIESGO = document.createElement('select');
+            sel_RIESGO.multiple = true;
+            sel_RIESGO.size = 2;
+            sel_RIESGO.id = "sel_RIESGO";
+            var RIESGO_options_str = "<option value='' unselected></option>";
+            sel_RIESGO.onchange = function(){filterFunc()};
+            RIESGO_options_str  += '<option value="Alto riesgo de desaparición">Alto riesgo de desaparición</option>';
+            RIESGO_options_str  += '<option value="Bajo riesgo de desaparición">Bajo riesgo de desaparición</option>';
+            sel_RIESGO.innerHTML = RIESGO_options_str;
+            div_RIESGO.appendChild(sel_RIESGO);
+            var lab_RIESGO = document.createElement('div');
+            lab_RIESGO.innerHTML = 'RIESGO';
+            lab_RIESGO.className = 'filterlabel';
+            div_RIESGO.appendChild(lab_RIESGO);
+            var reset_RIESGO = document.createElement('div');
+            reset_RIESGO.innerHTML = 'clear filter';
+            reset_RIESGO.className = 'filterlabel';
+            reset_RIESGO.onclick = function() {
+                var options = document.getElementById("sel_RIESGO").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_RIESGO.appendChild(reset_RIESGO);
+        resetLabels([layer_MICROOREGIONES_4,layer_PAISAJESCULTURALES_5,layer_ESTACIONESYPARADEROS_8]);
+        map.on("zoomend", function(){
+            resetLabels([layer_MICROOREGIONES_4,layer_PAISAJESCULTURALES_5,layer_ESTACIONESYPARADEROS_8]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_MICROOREGIONES_4,layer_PAISAJESCULTURALES_5,layer_ESTACIONESYPARADEROS_8]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_MICROOREGIONES_4,layer_PAISAJESCULTURALES_5,layer_ESTACIONESYPARADEROS_8]);
+        });
+        </script>
+    </body>
+</html>
